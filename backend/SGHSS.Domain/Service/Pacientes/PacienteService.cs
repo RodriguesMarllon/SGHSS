@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Pacientes;
+﻿using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
+using Domain.Entities.Pacientes;
 using Domain.Interfaces.Repositories.Pacientes;
 using Microsoft.Extensions.Logging;
 
@@ -73,6 +75,59 @@ public class PacienteService : IPacienteService
         {
             _logger.LogError(ex, "Error fetching paciente with ID: {Id}", id);
             throw new Exception("Error fetching paciente. Please try again later.", ex);
+        }
+    }
+
+    public async Task<IEnumerable<Paciente>> FindAllAsync(Expression<Func<Paciente, bool>> predicate)
+    {
+        try
+        {
+            _logger.LogInformation("Starting to find all pacientes.");
+
+            var response = await _pacienteRepository.FindAsync(predicate);
+            if (response == null)
+            {
+                _logger.LogWarning("No pacientes found matching the criteria.");
+                throw new KeyNotFoundException("No pacientes found matching the criteria.");
+            }
+
+            _logger.LogInformation($"Successfully found {response.Count()} pacientes matching the criteria.");
+            return response;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error finding pacientes matching the criteria.");
+            throw new Exception("Error finding pacientes. Please try again later.", ex);
+        }
+    }
+
+    public async Task<Paciente> FindByAsync(Expression<Func<Paciente, bool>> predicate)
+    {
+        try
+        {
+            _logger.LogInformation("Starting to find paciente matching the criteria.");
+
+            var response = await _pacienteRepository.FindAsync(predicate);
+            var paciente = response.FirstOrDefault();
+
+            if (paciente == null)
+            {
+                _logger.LogWarning("No paciente found matching the criteria.");
+                throw new KeyNotFoundException("No paciente found matching the criteria.");
+            }
+
+            _logger.LogInformation("Successfully found paciente matching the criteria.");
+
+            return paciente;
+        }
+        catch (KeyNotFoundException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error finding paciente matching the criteria.");
+            throw new Exception("Error finding paciente. Please try again later.", ex);
         }
     }
 }

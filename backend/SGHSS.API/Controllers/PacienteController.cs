@@ -8,6 +8,7 @@ using Api.Models.Pacientes;
 using Application.Handlers.Pacientes.RequestBody.Create;
 using Application.Handlers.Pacientes.Queries.GetAll;
 using Application.Handlers.Pacientes.Queries.GetById;
+using Application.Handlers.Pacientes.Queries.GetByCPF;
 
 namespace Api.Controllers
 {
@@ -47,6 +48,13 @@ namespace Api.Controllers
             var response = await _mediator.Send(queryMediator);
             return StatusCode(response.StatusCode, response);
         }
-        
+
+        [HttpGet("get-by-cpf")]
+        public async Task<IActionResult> GetByCPF([FromQuery] GetByCPFPacienteQueryModel query)
+        {
+            var queryMediator = _mapper.Map<GetByCPFPacienteQueryRequest>(query);
+            var response = await _mediator.Send(queryMediator);
+            return StatusCode(response.StatusCode, response);
+        }
     }
 }

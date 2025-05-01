@@ -4,6 +4,7 @@ using Api.Models.Pacientes;
 using Domain.Entities.Pacientes;
 using Application.Models.Response.Pacientes;
 using Application.Handlers.Pacientes.Queries.GetById;
+using Application.Handlers.Pacientes.Queries.GetByCPF;
 
 namespace Api.AutoMapper;
 
@@ -22,5 +23,7 @@ public class SGHSSProfile : Profile
         CreateMap<Paciente, GetAllPacienteResponseItem>();
         CreateMap<GetByIdPacienteQueryModel, GetByIdPacienteQueryRequest>();
         CreateMap<Paciente, GetByIdPacienteResponseItem>();
+        CreateMap<GetByCPFPacienteQueryModel, GetByCPFPacienteQueryRequest>();
+        CreateMap<Paciente, GetByCPFPacienteResponseItem>();
     }
 }

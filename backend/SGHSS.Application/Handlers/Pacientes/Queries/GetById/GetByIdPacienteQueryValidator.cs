@@ -7,8 +7,7 @@ public class GetByIdPacienteQueryValidator : AbstractValidator<GetByIdPacienteQu
     public GetByIdPacienteQueryValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty()
-            .WithMessage("Paciente ID is required")
+            .NotEmpty().WithMessage("Paciente ID is required")
             .NotEqual(Guid.Empty)
             .WithMessage("Paciente ID cannot be empty");
     }
