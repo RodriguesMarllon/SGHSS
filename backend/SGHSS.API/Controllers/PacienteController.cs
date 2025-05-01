@@ -7,6 +7,7 @@ using Application.DTOs.Pacientes;
 using Api.Models.Pacientes;
 using Application.Handlers.Pacientes.RequestBody.Create;
 using Application.Handlers.Pacientes.Queries.GetAll;
+using Application.Handlers.Pacientes.Queries.GetById;
 
 namespace Api.Controllers
 {
@@ -38,5 +39,14 @@ namespace Api.Controllers
             var response = await _mediator.Send(queryMediator);
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpGet("get-by-id")]
+        public async Task<IActionResult> GetById([FromQuery] GetByIdPacienteQueryModel query)
+        {
+            var queryMediator = _mapper.Map<GetByIdPacienteQueryRequest>(query);
+            var response = await _mediator.Send(queryMediator);
+            return StatusCode(response.StatusCode, response);
+        }
+        
     }
 }

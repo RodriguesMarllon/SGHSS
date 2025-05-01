@@ -18,7 +18,7 @@ namespace Api.Filters
 
             var methodName = fullActionName?.Split('.').Last().Split(' ').First() ?? fullActionName;
 
-            _logger.LogInformation($"Iniciou a execução do método {className}.{methodName}");
+            _logger.LogInformation($"Started execution of method {className}.{methodName}");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
@@ -28,7 +28,7 @@ namespace Api.Filters
 
             var methodName = fullActionName?.Split('.').Last().Split(' ').First() ?? fullActionName;
 
-            _logger.LogInformation($"Finalizou a execução do método {className}.{methodName}");
+            _logger.LogInformation($"Finished execution of method {className}.{methodName}");
         }
     }
 }

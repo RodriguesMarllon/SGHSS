@@ -7,49 +7,49 @@ public class CreatePacienteBodyValidator : AbstractValidator<CreatePacienteBodyR
     public CreatePacienteBodyValidator()
     {
         RuleFor(x => x.Pacientes)
-            .NotNull().WithMessage("Os dados do paciente são obrigatórios");
+            .NotNull().WithMessage("Paciente data is required");
 
         RuleFor(x => x.Pacientes.Name)
-            .NotEmpty().WithMessage("O nome é obrigatório")
-            .Length(3, 100).WithMessage("O nome deve ter entre 3 e 100 caracteres")
-            .Matches(@"^[a-zA-ZÀ-ÿ\s]+$").WithMessage("O nome deve conter apenas letras e espaços");
+            .NotEmpty().WithMessage("Name is required")
+            .Length(3, 100).WithMessage("Name must be between 3 and 100 characters")
+            .Matches(@"^[a-zA-ZÀ-ÿ\s]+$").WithMessage("Name must contain only letters and spaces");
 
         RuleFor(x => x.Pacientes.CPF)
-            .NotEmpty().WithMessage("O CPF é obrigatório")
-            .Length(11).WithMessage("O CPF deve conter 11 dígitos")
-            .Matches(@"^\d{11}$").WithMessage("O CPF deve conter apenas números")
-            .Must(BeValidCPF).WithMessage("CPF inválido");
+            .NotEmpty().WithMessage("CPF is required")
+            .Length(11).WithMessage("CPF must contain 11 digits")
+            .Matches(@"^\d{11}$").WithMessage("CPF must contain only numbers")
+            .Must(BeValidCPF).WithMessage("Invalid CPF");
 
         RuleFor(x => x.Pacientes.BirthDate)
-            .NotEmpty().WithMessage("A data de nascimento é obrigatória")
+            .NotEmpty().WithMessage("Birth date is required")
             .Must(birthDate => birthDate.ToUniversalTime() < DateTime.UtcNow)
-            .WithMessage("A data de nascimento não pode ser futura")
-            .Must(BeValidAge).WithMessage("A idade deve estar entre 0 e 120 anos");
+            .WithMessage("Birth date cannot be in the future")
+            .Must(BeValidAge).WithMessage("Age must be between 0 and 120 years");
 
         RuleFor(x => x.Pacientes.Phone)
-            .NotEmpty().WithMessage("O telefone é obrigatório")
-            .Matches(@"^\(\d{2}\)\s\d{5}-\d{4}$").WithMessage("O telefone deve estar no formato (99) 99999-9999");
+            .NotEmpty().WithMessage("Phone is required")
+            .Matches(@"^\(\d{2}\)\s\d{5}-\d{4}$").WithMessage("Phone must be in format (99) 99999-9999");
 
         RuleFor(x => x.Pacientes.Email)
-            .NotEmpty().WithMessage("O email é obrigatório")
-            .EmailAddress().WithMessage("Email inválido")
-            .MaximumLength(100).WithMessage("O email deve ter no máximo 100 caracteres");
+            .NotEmpty().WithMessage("Email is required")
+            .EmailAddress().WithMessage("Invalid email")
+            .MaximumLength(100).WithMessage("Email must have a maximum of 100 characters");
 
         RuleFor(x => x.Pacientes.Address)
-            .NotEmpty().WithMessage("O endereço é obrigatório")
-            .Length(5, 200).WithMessage("O endereço deve ter entre 5 e 200 caracteres");
+            .NotEmpty().WithMessage("Address is required")
+            .Length(5, 200).WithMessage("Address must be between 5 and 200 characters");
     }
 
     private bool BeValidCPF(string cpf)
     {
         if (string.IsNullOrWhiteSpace(cpf)) return false;
 
-        // Remove caracteres não numéricos
+        // Remove non-numeric characters
         cpf = cpf.Trim().Replace(".", "").Replace("-", "");
 
         if (cpf.Length != 11) return false;
 
-        // Verifica se todos os dígitos são iguais
+        // Check if all digits are the same
         if (cpf.All(x => x == cpf[0])) return false;
 
         // Validação do primeiro dígito verificador

@@ -50,22 +50,22 @@ namespace Infrastructure.Services.AppSettings
         {
             if (apiConfiguration == null)
             {
-                throw new ArgumentException("Nome da API informado não encontrado/configurado no AppSettings.");
+                throw new ArgumentException("API name not found/configured in AppSettings.");
             }
 
             if (string.IsNullOrWhiteSpace(apiConfiguration.BaseUrl))
             {
-                throw new ArgumentException($"A configuração para a tag '{nameof(ApiConfiguration.BaseUrl)}' para a API '{apiName}' é inválida.");
+                throw new ArgumentException($"Configuration for tag '{nameof(ApiConfiguration.BaseUrl)}' for API '{apiName}' is invalid.");
             }
 
             if ((apiConfiguration.Controllers?.Count ?? 0) == 0)
             {
-                throw new ArgumentException($"Não existem controllers configurados para a API '{apiName}'.");
+                throw new ArgumentException($"No controllers configured for API '{apiName}'.");
             }
 
             if (apiConfiguration.Controllers.Any(controller => controller.Value.Count == 0 || controller.Value.Any(endpoints => string.IsNullOrWhiteSpace(endpoints.Value))))
             {
-                throw new ArgumentException($"É necessário que ao menos um endpoint seja configurado para cada controller na API '{apiName}'.");
+                throw new ArgumentException($"At least one endpoint must be configured for each controller in API '{apiName}'.");
             }
 
             return apiConfiguration;

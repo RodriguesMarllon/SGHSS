@@ -52,5 +52,28 @@ public class PacienteService : IPacienteService
             throw new Exception("Error fetching all pacientes. Please try again later.", ex);
         }
     }
+
+    public async Task<Paciente> GetByIdAsync(Guid id)
+    {
+        try
+        {
+            _logger.LogInformation("Starting to fetch paciente with ID: {Id}", id);
+
+            var response = await _pacienteRepository.GetByIdAsync(id);
+            if (response == null)
+            {
+                _logger.LogWarning("Paciente with ID: {Id} not found", id);
+                throw new KeyNotFoundException($"Paciente with ID: {id} not found.");
+            }
+
+            _logger.LogInformation("Successfully retrieved paciente with ID: {Id}", id);
+            return response;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching paciente with ID: {Id}", id);
+            throw new Exception("Error fetching paciente. Please try again later.", ex);
+        }
+    }
 }
 

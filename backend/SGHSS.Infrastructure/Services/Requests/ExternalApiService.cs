@@ -92,7 +92,7 @@ namespace Infrastructure.Services.Requests
 
             var request = new HttpRequestMessage(method, url);
 
-            // Verifica se o método é POST ou PUT e se há dados para enviar
+            // Check if method is POST or PUT and if there is data to send
             if ((method == HttpMethod.Post || method == HttpMethod.Put) && data != null)
             {
                 if (fromForm)
