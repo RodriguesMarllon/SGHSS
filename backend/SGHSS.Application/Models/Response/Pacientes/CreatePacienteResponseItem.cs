@@ -1,4 +1,4 @@
-namespace Application.Models.Response;
+namespace Application.Models.Response.Pacientes;
 
 public class CreatePacienteResponseItem
 {

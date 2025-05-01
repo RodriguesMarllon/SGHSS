@@ -2,7 +2,7 @@ namespace Domain.Entities.Pacientes
 {
     public class Paciente
     {
-         public Guid Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string CPF { get; private set; }
         public DateTime BirthDate { get; private set; }

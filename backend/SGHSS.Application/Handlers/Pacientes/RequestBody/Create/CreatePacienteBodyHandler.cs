@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Application.Models.Response;
 using AutoMapper;
 using Application.Models.Abstracts;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +7,7 @@ using System.Net;
 using Infrastructure.CrossCutting.Utils;
 using Domain.Entities.Pacientes;
 using Domain.Service.Pacientes;
+using Application.Models.Response.Pacientes;
 
 namespace Application.Handlers.Pacientes.RequestBody.Create;
 

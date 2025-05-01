@@ -1,8 +1,7 @@
 using Application.Models.Abstracts;
 using MediatR;
 using Application.DTOs.Pacientes;
-using Application.Models.Response;
-using FluentValidation;
+using Application.Models.Response.Pacientes;
 
 namespace Application.Handlers.Pacientes.RequestBody.Create
 {

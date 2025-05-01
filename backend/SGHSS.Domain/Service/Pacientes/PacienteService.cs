@@ -34,5 +34,23 @@ public class PacienteService : IPacienteService
             throw new Exception("Error creating Paciente. Please try again later.", ex);
         }
     }
+
+    public async Task<IEnumerable<Paciente>> GetAllAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Starting to fetch all pacientes");
+
+            var response = await _pacienteRepository.GetAllAsync();
+            _logger.LogInformation("Successfully retrieved {Count} pacientes", response.Count());
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching all pacientes");
+            throw new Exception("Error fetching all pacientes. Please try again later.", ex);
+        }
+    }
 }
 
