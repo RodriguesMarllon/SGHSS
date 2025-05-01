@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGHSS.Domain", "SGHSS.Domain\SGHSS.Domain.csproj", "{0663DAB7-72F7-45F4-B611-5CEB32816475}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "SGHSS.Domain\Domain.csproj", "{0663DAB7-72F7-45F4-B611-5CEB32816475}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGHSS.Application", "SGHSS.Application\SGHSS.Application.csproj", "{0432ECD7-A771-46AA-8D64-2A40B01FDCEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "SGHSS.Application\Application.csproj", "{0432ECD7-A771-46AA-8D64-2A40B01FDCEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGHSS.Infrastructure", "SGHSS.Infrastructure\SGHSS.Infrastructure.csproj", "{6A54CEC2-8A56-478A-9A04-1DE8978DDD74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "SGHSS.Infrastructure\Infrastructure.csproj", "{6A54CEC2-8A56-478A-9A04-1DE8978DDD74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGHSS.API", "SGHSS.API\SGHSS.API.csproj", "{9B89C8A6-40E2-430A-909F-7CD0FEF4DC12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "SGHSS.API\Api.csproj", "{9B89C8A6-40E2-430A-909F-7CD0FEF4DC12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,5 +72,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C4EC85D7-A3D3-408B-BAD0-C2BA1B2FB4D4}
 	EndGlobalSection
 EndGlobal
