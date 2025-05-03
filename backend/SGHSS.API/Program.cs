@@ -14,8 +14,15 @@ using System.Text.Json.Serialization;
 using Polly;
 using Scalar.AspNetCore;
 using Domain.Service.Abstract;
+using Serilog;
+using System.Security.Claims;
+using Serilog.Context;
+
+SetUpLogging();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 builder.Services.AddOpenApi();
 
@@ -79,6 +86,26 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseAuthentication();
+
+app.Use((httpContext, next) =>
+{
+    const string PROTOCOL = "Protocol";
+    var httpProtocol = httpContext.Request.Protocol;
+
+    const string HTTP_SCHEME = "Scheme";
+    var httpScheme = httpContext.Request.Scheme;
+
+    var userIdClaim = httpContext.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);
+
+    using (LogContext.PushProperty(PROTOCOL, httpProtocol))
+    using (LogContext.PushProperty("UserId", userIdClaim?.Value ?? "unkow"));
+    using (LogContext.PushProperty(HTTP_SCHEME, httpScheme))
+    {
+        return next();
+    }
+});
+
 ServiceProviderHelper.ServiceProvider = app.Services;
 
 // Use CORS
@@ -104,13 +131,38 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionMiddleware();
 
-app.UseHttpsRedirection();
+// Desabilita redirecionamento HTTPS em desenvolvimento
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+static void SetUpLogging()
+{
+    var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+    Directory.CreateDirectory(basePath); // Garante que o diretório existe
+    var logPath = Path.Combine(basePath, "SGHSS-{Date}-logging-json.log");
+
+    Serilog.Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.Hosting", Serilog.Events.LogEventLevel.Information)
+        .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
+        .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
+        .WriteTo.Seq(
+            "http://localhost:5341",
+            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
+        )
+        .Enrich.WithProperty("App", "SGHSS-001")
+        .Enrich.FromLogContext()
+        .CreateBootstrapLogger();
+}
 
 public class RemoveUnusedParametersFilter : IOperationFilter
 {

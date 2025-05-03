@@ -8,12 +8,21 @@ using Application.Models.Response.Pacientes;
 
 namespace Application.Handlers.Pacientes.Queries.GetAll;
 
+/// <summary>
+/// Handler for retrieving all patients
+/// </summary>
 public class GetAllPacienteQueryHandler : IRequestHandler<GetAllPacienteQueryRequest, ResponseBase<IEnumerable<GetAllPacienteResponseItem>>>
 {
     private readonly IMapper _mapper;
     private readonly ILogger<GetAllPacienteQueryHandler> _logger;
     private readonly IPacienteService _pacienteService;
 
+    /// <summary>
+    /// Initializes a new instance of the GetAllPacienteQueryHandler class
+    /// </summary>
+    /// <param name="mapper">AutoMapper instance for object mapping</param>
+    /// <param name="logger">Logger instance for logging operations</param>
+    /// <param name="pacienteService">Service for patient operations</param>
     public GetAllPacienteQueryHandler(
         IMapper mapper, 
         ILogger<GetAllPacienteQueryHandler> logger, 
@@ -24,6 +33,16 @@ public class GetAllPacienteQueryHandler : IRequestHandler<GetAllPacienteQueryReq
         _pacienteService = pacienteService;
     }
 
+    /// <summary>
+    /// Handles the retrieval of all patients
+    /// </summary>
+    /// <param name="request">The request to get all patients</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A response containing the list of all patients</returns>
+    /// <remarks>
+    /// This handler retrieves all patients from the system and returns them in a list.
+    /// The response includes basic information about each patient.
+    /// </remarks>
     public async Task<ResponseBase<IEnumerable<GetAllPacienteResponseItem>>> Handle(GetAllPacienteQueryRequest request, CancellationToken cancellationToken)
     {
         try 

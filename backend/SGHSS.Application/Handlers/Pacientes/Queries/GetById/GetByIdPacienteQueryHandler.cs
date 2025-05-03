@@ -8,12 +8,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Handlers.Pacientes.Queries.GetById;
 
+/// <summary>
+/// Handler for retrieving a patient by ID
+/// </summary>
 public class GetByIdPacienteQueryHandler : IRequestHandler<GetByIdPacienteQueryRequest, ResponseBase<GetByIdPacienteResponseItem>>
 {
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
     private readonly IPacienteService _pacienteService;
 
+    /// <summary>
+    /// Initializes a new instance of the GetByIdPacienteQueryHandler class
+    /// </summary>
+    /// <param name="mapper">AutoMapper instance for object mapping</param>
+    /// <param name="logger">Logger instance for logging operations</param>
+    /// <param name="pacienteService">Service for patient operations</param>
     public GetByIdPacienteQueryHandler(IMapper mapper, ILogger<GetByIdPacienteQueryHandler> logger, IPacienteService pacienteService)
     {
         _mapper = mapper;
@@ -21,6 +30,16 @@ public class GetByIdPacienteQueryHandler : IRequestHandler<GetByIdPacienteQueryR
         _pacienteService = pacienteService;
     }
 
+    /// <summary>
+    /// Handles the retrieval of a patient by ID
+    /// </summary>
+    /// <param name="request">The request containing the patient ID</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A response containing the patient information</returns>
+    /// <remarks>
+    /// This handler retrieves a specific patient from the system using their unique identifier.
+    /// If the patient is not found, a 404 response will be returned.
+    /// </remarks>
     public async Task<ResponseBase<GetByIdPacienteResponseItem>> Handle(GetByIdPacienteQueryRequest request, CancellationToken cancellationToken)
     {
         try
